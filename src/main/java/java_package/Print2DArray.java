@@ -9,7 +9,8 @@ public class Print2DArray {
     //private boolean valide = true; //variable qui définis si la position demandée est valide (pas un mur etc...)
 
     private boolean isPosValide;
-	
+    
+    Personnage p = new Personnage();
 	
 	private static char [][]map = { //matrice moche du niveau
          { 0x23, 0x23, 0x23,0x23, 0x23, 0x23 },
@@ -38,18 +39,28 @@ public class Print2DArray {
 	public static char getCase(int l, int c) { //getter case aux coordonnées demandées
             return map[l][c];
 	}
+        
+        
 
-	public void placer(int l, int c, char t) {
+	public boolean placer(int l, int c, char t, boolean test) {
 		
             if(t == 'J') { //si le "bloc" à placer est  le joueur
 		if (isPosValide(l,c) == true){
-                    map[l][c] = t;
-                }
+                    if (test == true){
+                        return true;
+                    } else {
+                        map[l][c] = t;
+                    }
+                } else { return false; }
             } else {
         	if(t == 'x') { //si le bloc à placer est de la glace fondue:
-                    map[l][c] = t;
-		}
+                    if (isPosValide(l,c) == true){
+                        map[l][c] = t;
+                        
+                    }
+                } 
             }
+            return false;
 	}
         
         public boolean isPosValide(int l, int c){
@@ -57,16 +68,18 @@ public class Print2DArray {
                     System.out.println("Erreur de placement."); //si la coordonnée du bloc a placer dépasse les bordures du niveau
                     isPosValide = false;}
             else{
-                if(map[l][c] == 'o' || map[l][c] == 'S' || map[l][c] == 'E') { //Si position == glace ou Start ou End
-                           
-                    if(map[l][c] == 'E') { //si next bloc == End, appelle niveau terminé pour changer la valeur t finir le niveau
-                        niveauTermine();
-                    }
-                    isPosValide = true; // print le joueur sur le bloc à la coordonnée demandée
+                if(map[l][c] == 'M' || map[l][c] == 0x23) { //Si position == glace ou Start ou End
+                    System.out.println("Le Pinguin ne peut pas se dépacer ici");
+                    isPosValide = false;
+                     
                 } else {
-                    if (map[l][c] == 'M' || map[l][c] == 0x23){ // si le joueur veut aller sur un bloc de mur ou sur un bloc d'éxterieur de mur
-                        System.out.println("Le Pinguin ne peut pas se dépacer ici");
-                        isPosValide = false;
+                    if (map[l][c] == 'o' || map[l][c] == 'S' || map[l][c] == 'E'){ // si le joueur veut aller sur un bloc de mur ou sur un bloc d'éxterieur de mur
+                        
+                        if(map[l][c] == 'E') { //si next bloc == End, appelle niveau terminé pour changer la valeur t finir le niveau
+                            niveauTermine();
+                        }
+                        isPosValide = true; // print le joueur sur le bloc à la coordonnée demandée
+                        
                     }
                         
                 }		

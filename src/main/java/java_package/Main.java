@@ -12,9 +12,11 @@ public class Main {
 	Personnage perso = new Personnage();
 	char valueDeplacement; //variable qui stockera le touche pressée
 	int i =0;
-                
+        
+        int X;
+        int Y;
                 // Premier print pour affiche le niveau                
-        printMap.placer(perso.getXPerso(), perso.getYPerso(), 'J');
+        printMap.placer(perso.getXPerso(), perso.getYPerso(), 'J', false);
 	printMap.afficherMatrice();
                 
                 
@@ -50,20 +52,42 @@ public class Main {
                 if(valueDeplacement == 'q') {
                     perso.deplacerPersonnage(4);	
                 }
+                X = perso.getXPerso();
+                Y = perso.getYPerso();
+                System.out.println(""+X +Y);
                 
-                System.out.println(printMap.positionEstElleValide());
+                X = perso.getOldxPerso();
+                Y = perso.getOldyPerso();
+                System.out.println(""+X +Y);
                 
-                if (printMap.positionEstElleValide()){
-                    printMap.placer(perso.getOldxPerso(), perso.getOldyPerso(), 'x'); //x = glace fondue, placement glace fondue a l'ancien emplacement du personnage
-				
-                    printMap.placer(perso.getXPerso(), perso.getYPerso(), 'J'); // place le personnage au nouvealles coordonnées sur la map
-                    printMap.afficherMatrice();
+                   // sinon remettre de la glace a la pace du joueur
+                if (printMap.placer(perso.getXPerso(), perso.getYPerso(), 'J', true) == true){
+                    printMap.placer(perso.getXPerso(), perso.getYPerso(), 'J', false);
+                    printMap.placer(perso.getOldxPerso(), perso.getOldyPerso(), 'x', false);
                 } else { 
-                    printMap.placer(perso.getOldxPerso(), perso.getOldyPerso(), 'J');
+                    System.out.println("Mauvaise case");
+                    X = perso.getOldxPerso();
+                    Y = perso.getOldyPerso();
+                    
+                    perso.setXPerso(X);
+                    perso.setYPerso(Y);
+                }
+                
+                X = perso.getXPerso();
+                Y = perso.getYPerso();
+                System.out.println(""+X +Y);
+                
+                X = perso.getOldxPerso();
+                Y = perso.getOldyPerso();
+                System.out.println(""+X +Y);
+                    // replacer le joueur à sa place initiale
+                   //x = glace fondue, placement glace fondue a l'ancien emplacement du personnage
+                printMap.afficherMatrice();
+                
                 }
                 
             }
-	}
+	
 	System.out.println("Bravo ! Niveau Terminé !");
     
     }

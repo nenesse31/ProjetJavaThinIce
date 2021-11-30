@@ -30,17 +30,19 @@ public class Personnage {
     }
 	
     	//Setter
-    public void setXPerso(int newX) {
-        this.oldxPerso = this.xPerso;
+    public void setXPerso(int newX) {    
     	this.xPerso = newX;
     }
 	
     public void setYPerso(int newY) {
-        this.oldyPerso = this.yPerso;
     	this.xPerso = newY;
     }
 	
     public void deplacerPersonnage(int direction) {
+        
+        this.oldxPerso = xPerso;
+        this.oldyPerso = yPerso;
+                
     	switch(direction) {
     		//Haut
     	case 1:
