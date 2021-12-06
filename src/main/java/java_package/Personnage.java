@@ -1,6 +1,6 @@
 package java_package;
 
-public class Personnage {
+public class Personnage { //modele
 	
     private int xPerso;
     private int yPerso;
@@ -15,11 +15,11 @@ public class Personnage {
 	
 	//Getter
     public int getXPerso() {
-    	return this.xPerso;
+    	return xPerso;
     }
 	
     public int getYPerso() {
-    	return this.yPerso;
+    	return yPerso;
     }
     
     public int getOldxPerso() {
@@ -30,13 +30,22 @@ public class Personnage {
     }
 	
     	//Setter
-    public void setXPerso(int newX) {    
-    	this.xPerso = newX;
+    public void setXYPerso(int newX, int newY) {    
+    	xPerso = newX;
+        yPerso = newY;
     }
 	
     public void setYPerso(int newY) {
-    	this.xPerso = newY;
+    	yPerso = newY;
+        System.out.println("newY"+newY);
     }
+    
+    /*public void setOldxPerso() {
+    	this.xPerso = this.oldxPerso;
+    }
+    public void setOldyPerso() {
+    	this.xPerso = this.oldyPerso;
+    }*/
 	
     public void deplacerPersonnage(int direction) {
         
