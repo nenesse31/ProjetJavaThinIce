@@ -14,18 +14,23 @@ import java.util.Scanner;
 public class DeplacerPerso {
     
         Print2DArray printMap = new Print2DArray();
-	Personnage perso = new Personnage();
+	//Personnage perso = new Personnage();
 	char valueDeplacement; //variable qui stockera le touche pressée
         
-        int oldX;
-        int oldY;
+        int i = 0;
         
-        int X;
-        int Y;
+        static int oldX;
+        static int oldY;
+        
+        static int X;
+        static int Y;
+        
+        static int OX;
+        static int OY;
     
     public void premierPlacement(){
-        
-        printMap.setMap();
+        printMap.newNiveau();
+        printMap.setMap(0);
         
         ArrayList<Integer> start = printMap.startLevel();
         
@@ -33,7 +38,7 @@ public class DeplacerPerso {
         Y = start.get(1);
                 // Premier print pour affiche le niveau + Trouver la position du départ du niveau               
         printMap.placer(X, Y, 'J');
-        perso.setXYPerso(X, Y);
+        //perso.setXYPerso(X, Y);
 	printMap.afficherMatrice(X,Y);
         
     }
@@ -44,9 +49,6 @@ public class DeplacerPerso {
                     
             //i++; //pour le debug
             //System.out.println(i);
-                        
-            X = perso.getXPerso();
-            Y = perso.getYPerso();
             
             oldX = X;
             oldY = Y;
@@ -58,50 +60,62 @@ public class DeplacerPerso {
 		System.out.println("Mauvaise Touche");
             }
             else {
-                 if(valueDeplacement == 'z') {
+                if(valueDeplacement == 'z') {
                     X --;
-                    deplacer(1);
+                    deplacer();
                 }
 				
                 if(valueDeplacement == 's') {
                     X ++;
-                    deplacer(2);
+                    deplacer();
                 }
 				
                 if(valueDeplacement == 'd') {
                     Y ++;
-                    deplacer(3);
+                    deplacer();
                 }
 				
                 if(valueDeplacement == 'q') {
                     Y --;
-                    deplacer(4);
+                    deplacer();
                 }
                 
+                if(valueDeplacement == '2') {
+                    printMap.setMap(2);
+                }
+                
+                printMap.afficherMatrice(X,Y);
                 
             }
         }
         System.out.println("Bravo ! Niveau Terminé !");
     }
+     
+    int glace = 4;
+    
+    public void deplacer(){
         
-    public void deplacer(int n){
+        glace ++;
+        
+        if(printMap.isGlaceEpaisse(X, Y) == true) {
+            glace = 1;
+        }
+        
         
         if(printMap.isPosValide(X, Y) == false){
             System.out.println("Mauvaise case");
-        } else if(printMap.isGlaceEpaisse(X, Y) == true) {
-            //printMap.placer(X, Y, 'o');
+            X = oldX;
+            Y = oldY;
+        } else if(glace == 3) {
+            System.out.println("Glace epaisse");
             printMap.placer(oldX, oldY, 'o');
-            perso.deplacerPersonnage(n);
-        } else {                        
-            printMap.placer(oldX, oldY, 'x');
-            perso.deplacerPersonnage(n);
-            //printMap.placer(X, Y, 'J');
+           } else {
+           printMap.placer(oldX, oldY, 'x');
+           
         }
-    }
- 
-	
-    
         
+    }
+    
 }
     
 

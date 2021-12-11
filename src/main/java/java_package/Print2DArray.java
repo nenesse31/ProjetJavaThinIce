@@ -28,34 +28,24 @@ public class Print2DArray { //Vue
     //joueur = U+24D4
 	private static char [][]map;
                
-        private static char [][]entity={
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            };
+
 
         ArrayList<Integer> startPos = new ArrayList<Integer>();
 
-        public void setMap(){
-            switch(level){
-                case 0:
-                    map = lev.getMap1();
-                    break;
-                default:
-                    System.out.println("Vous avez fini le jeu ! Félicitations");
-            }
+        public void setMap(int n){
+            if (n == 0){
+            map = lev.getMap(level);}
+            else { map = lev.getMap(n);}
+        }
+        
+        static boolean gameFinished = false;
+        
+        public boolean getGameFinished(){
+            return gameFinished;
+        }
+        
+        public void setIsGameFinished(){
+            gameFinished = true;
         }
         
 	public ArrayList<Integer> startLevel(){
@@ -114,10 +104,8 @@ public class Print2DArray { //Vue
                 if(map[l][c] == 'm' || map[l][c] == 'v' || map[l][c] == 'x') { //Si position == glace ou Start ou End
                     System.out.println("Le Pinguin ne peut pas se dépacer ici");
                     isPosValide = false;
-                   
-                     
                 } else {
-                    if (map[l][c] == 'o' || map[l][c] == 'd' || map[l][c] == 'f' || map[l][c] == 'O'){ // si le joueur veut aller sur un bloc de mur ou sur un bloc d'éxterieur de mur
+                    if (map[l][c] == 'o' || map[l][c] == 'd' || map[l][c] == 'f' || map[l][c] == 'G'){ // si le joueur veut aller sur un bloc de mur ou sur un bloc d'éxterieur de mur
                         
                         if(map[l][c] == 'f') { //si next bloc == End, appelle niveau terminé pour changer la valeur t finir le niveau
                             niveauTermine();
@@ -125,7 +113,6 @@ public class Print2DArray { //Vue
                         isPosValide = true; // print le joueur sur le bloc à la coordonnée demandée
                         score ++;
                     }
-                        
                 }		
             }
             return isPosValide;
@@ -133,7 +120,7 @@ public class Print2DArray { //Vue
         }
         
         public boolean isGlaceEpaisse(int l, int c){
-            if (map[l][c] == 'O'){
+            if (map[l][c] == 'G'){
                 return true;
             } else { return false;}
         }
@@ -142,10 +129,18 @@ public class Print2DArray { //Vue
             end = true;
             level ++;
 	}
+        
+        public void newNiveau() { // set la valeur endo to true
+            end = false;
+	}
 	
 	public boolean niveauEsTilTermine(){ // retourne la valeur end
             return end;
 	}
+        
+        public void setNiveauTermine(){
+            end = false;
+        }
 	
         /*public void positionNonValide(){
             this.valide = false;
