@@ -7,14 +7,17 @@ public class Main {
         
         DeplacerPerso play = new DeplacerPerso();
         Print2DArray print = new Print2DArray();
+        MenuAcceuil menu = new MenuAcceuil();
         
+        //menu.writeFile();
+       
+        menu.MenuAcceuil();
         
         while(print.getGameFinished() == false){
-            //print.setNiveauTermine();
             play.premierPlacement();
             play.whileNiveau();
-            System.out.println(print.niveauEsTilTermine());
         }
+        
         System.out.println("Vous avez fini le jeu !");
 
     }
